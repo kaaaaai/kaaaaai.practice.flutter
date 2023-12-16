@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterdemo/animate_page.dart';
 import 'package:flutterdemo/counter_widget.dart';
 import 'package:flutterdemo/get_state_object_route.dart';
 import 'package:flutterdemo/state_change_pate.dart';
@@ -72,46 +73,60 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    // This method is rerun every time setState is called, for instance as done
-    // by the _incrementCounter method above.
-    //
-    // The Flutter framework has been optimized to make rerunning build methods
-    // fast, so that you can just rebuild anything that needs updating rather
-    // than having to individually change instances of widgets.
+
+    var animateBtn = CupertinoButton(
+        color: CupertinoColors.activeBlue,
+        child: const Text("动画"),
+        onPressed: _jumpToAnimatePage);
+
+    var countCeneter = Center(child: Column(
+      children: [
+        const Text(
+          'You have pushed the button this many times:',
+        ),
+        Text(
+          '$_counter',
+          style: Theme.of(context).textTheme.headline4,
+        )],
+    ));
+
+    var sizeBox = SizedBox(height: 10.0);
+
+    var listView = ListView(
+      children: <Widget>[
+       countCeneter,
+        sizeBox,
+        CupertinoButton(
+            color: CupertinoColors.activeBlue,
+            onPressed: _jumpCounterPage,
+            child: const Text("计数器")),
+        sizeBox,
+        ElevatedButton(
+            onPressed: _jumpToGetStateRoute,
+            child: const Text("生命周期-状态变化")),
+        sizeBox,
+        CupertinoButton(
+            color: CupertinoColors.activeBlue,
+            child: const Text("状态管理"),
+            onPressed: _jumpToStateChangeTestPage),
+        sizeBox,
+        ElevatedButton(onPressed: _jumpToRoutePate,
+            child: const Text("路由跳转")),
+        sizeBox,
+        animateBtn
+      ],
+    );
+
+    var padddingContainer = Padding(padding: EdgeInsets.all(20),
+    child: listView);
+
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
         // the App.build method, and use it to set our appbar title.
         title: Text(widget.title),
       ),
-      body: Center(
-        // Center is a layout widget. It takes a single child and positions it
-        // in the middle of the parent.
-        child: ListView(
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            CupertinoButton(
-                color: CupertinoColors.activeBlue,
-                onPressed: _jumpCounterPage,
-                child: const Text("计数器")),
-            ElevatedButton(
-                onPressed: _jumpToGetStateRoute,
-                child: const Text("生命周期-状态变化")),
-            CupertinoButton(
-                color: CupertinoColors.activeBlue,
-                child: const Text("状态管理"),
-                onPressed: _jumpToStateChangeTestPage),
-            ElevatedButton(onPressed: _jumpToRoutePate,
-                child: const Text("路由跳转"))
-          ],
-        ),
-      ),
+      body: padddingContainer,
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
         tooltip: 'Increment',
@@ -162,5 +177,15 @@ class _MyHomePageState extends State<MyHomePage> {
       //输出`TipRoute`路由返回结果
       print("路由返回值: $result");
 
+  }
+
+  void _jumpToAnimatePage() {
+    var route = PhysicsCardDragDemo();
+
+    var result = Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return route;
+    }));
+
+    print("路由返回值: $result");
   }
 }
