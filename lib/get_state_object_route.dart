@@ -33,7 +33,7 @@ class _GetStateObjectRouteState extends State<GetStateObjectRoute> {
               return ElevatedButton(
                 onPressed: () {
                   // 直接通过of静态方法来获取ScaffoldState
-                  ScaffoldState _state=Scaffold.of(context);
+                  ScaffoldState _state = Scaffold.of(context);
                   // 打开抽屉菜单
                   _state.openDrawer();
                 },

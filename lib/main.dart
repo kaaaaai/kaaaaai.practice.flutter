@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterdemo/CartPractice/CataLog.dart';
 import 'package:flutterdemo/animate_page.dart';
 import 'package:flutterdemo/counter_widget.dart';
 import 'package:flutterdemo/get_state_object_route.dart';
+import 'package:flutterdemo/network_practice.dart';
 import 'package:flutterdemo/state_change_pate.dart';
 import 'package:flutterdemo/tip_route.dart';
 
@@ -74,11 +76,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
 
-    var animateBtn = CupertinoButton(
-        color: CupertinoColors.activeBlue,
-        child: const Text("动画"),
-        onPressed: _jumpToAnimatePage);
-
     var countCeneter = Center(child: Column(
       children: [
         const Text(
@@ -89,6 +86,18 @@ class _MyHomePageState extends State<MyHomePage> {
           style: Theme.of(context).textTheme.headline4,
         )],
     ));
+
+    var animateBtn = CupertinoButton(
+        color: CupertinoColors.activeBlue,
+        child: const Text("动画"),
+        onPressed: _jumpToAnimatePage);
+
+    var cataBtn = ElevatedButton(onPressed: _jumpToGetCataRoute, child: const Text("状态管理 - context"));
+
+    var networkBtn = CupertinoButton(
+        color: CupertinoColors.activeBlue,
+        child: const Text("网络"),
+        onPressed: _jumpToNetworkPage);
 
     var sizeBox = SizedBox(height: 10.0);
 
@@ -113,7 +122,9 @@ class _MyHomePageState extends State<MyHomePage> {
         ElevatedButton(onPressed: _jumpToRoutePate,
             child: const Text("路由跳转")),
         sizeBox,
-        animateBtn
+        animateBtn,
+        cataBtn,
+        networkBtn,
       ],
     );
 
@@ -153,6 +164,15 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  void _jumpToGetCataRoute() {
+    Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) {
+          return MyCatalog();
+        })
+    );
+  }
+
   void _jumpToStateChangeTestPage() {
     Navigator.push(
         context,
@@ -181,6 +201,16 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _jumpToAnimatePage() {
     var route = PhysicsCardDragDemo();
+
+    var result = Navigator.push(context, MaterialPageRoute(builder: (context) {
+      return route;
+    }));
+
+    print("路由返回值: $result");
+  }
+
+  void _jumpToNetworkPage() {
+    var route = NetworkRoute();
 
     var result = Navigator.push(context, MaterialPageRoute(builder: (context) {
       return route;
